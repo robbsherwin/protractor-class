@@ -28,7 +28,7 @@ exports.config = {
   seleniumAddress: determineSeleniumAddress(),
 
   suites: {
-    validateForums: "../specs/validateForumsSpec.js"
+    votePlayer: "../specs/voteSpec.js"
   },
 
   framework: "jasmine2",
@@ -76,9 +76,9 @@ exports.config = {
       // you could use other properties here if you want, such as platform and version
       var browserName = config.capabilities.browserName;
 
-      if (typeof process.env.TEST_ENVIRONMENT !== "undefined") {
-        browser.baseUrl = process.env.TEST_ENVIRONMENT;
-        console.log("Base URL = " + process.env.TEST_ENVIRONMENT);
+      if (typeof process.env.PAGE_ENVIRONMENT !== "undefined") {
+        browser.baseUrl = process.env.PAGE_ENVIRONMENT;
+        console.log("Base URL = " + process.env.PAGE_ENVIRONMENT);
       } else {
         console.log("Environment variable undefined, failing test");
       }

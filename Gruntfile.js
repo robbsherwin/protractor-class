@@ -10,11 +10,11 @@ module.exports = function (grunt) {
                     // Arguments passed to the command
                 }
             },
-            validate_forums_tests: {
+            votePlayer: {
                 configFile: "tests/e2e/conf/protractorConf.js",
                 options: {
                   args: {
-                    suite: ['validateForums'],
+                    suite: ['votePlayer'],
                     verbose: true
                   }
                 }
@@ -26,7 +26,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
-    grunt.registerTask('validateForums', ['protractor:validate_forums_tests']);
+    grunt.registerTask('votePlayer', ['protractor:votePlayer']);
 };
 
 
