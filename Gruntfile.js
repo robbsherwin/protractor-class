@@ -10,6 +10,15 @@ module.exports = function (grunt) {
                     // Arguments passed to the command
                 }
             },
+            bbref: {
+                configFile: "tests/e2e/conf/protractorConf.js",
+                options: {
+                  args: {
+                    suite: ['bbref'],
+                    verbose: true
+                  }
+                }
+              },            
             votePlayer: {
                 configFile: "tests/e2e/conf/protractorConf.js",
                 options: {
@@ -26,6 +35,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
+    grunt.registerTask('bbref', ['protractor:bbref']);
     grunt.registerTask('votePlayer', ['protractor:votePlayer']);
 };
 

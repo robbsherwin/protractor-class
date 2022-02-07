@@ -25,10 +25,15 @@ function determineSeleniumAddress() {
 }
 
 exports.config = {
+
+  SELENIUM_PROMISE_MANAGER: false,
+  
   seleniumAddress: determineSeleniumAddress(),
 
   suites: {
+    bbref: "../specs/bbref.js",
     votePlayer: "../specs/voteSpec.js"
+
   },
 
   framework: "jasmine2",
