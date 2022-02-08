@@ -103,7 +103,7 @@ VotePage.prototype = Object.create({}, {
                 // If the word Position is there then we are probably on the right page
                 if (specificText.includes("Position")) { 
                     await console.log("The word Position was found.");
-                    
+
                     if (specificText.includes("Still Intact through 2022")) {
                         await console.log(playerName + " will not be in the game. Rookie status is still intact.");
                         await notInGameArray.push(playerName);
@@ -114,7 +114,7 @@ VotePage.prototype = Object.create({}, {
                     }
                 }
                 else {
-                    await console.log("Page probably wrong, can't find the word Position:");
+                    await console.log("The page we are on is probably wrong as can't find the word Position:");
                     await cantFindPlayerArray.push(playerName);
                 }
             }
