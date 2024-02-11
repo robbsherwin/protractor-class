@@ -18,6 +18,8 @@ var searchButton = element(by.xpath('//*[@id="header"]/div[3]/form/input[1]'));
 var metaMoreButton = element(by.id("meta_more_button"));
 var specificPlayerPageLink = element(by.xpath('/html/body/div[2]/div[3]/div[1]/div[2]/div[1]/div[1]/div[1]/strong/a'));
 
+var specificPlayerPageLink2 = element(by.css('#players > div.search-item > div.search-item-name > strong > a'))
+
 
 //page objects
 VotePage.prototype = Object.create({}, {
@@ -32,6 +34,7 @@ VotePage.prototype = Object.create({}, {
     lookUpPlayer: { 
         value: async function (playerName, notInGameArray, inGameArray, cantFindPlayerArray) {
 
+            await tools.closeBBREFPopup();
             await browser.sleep(1000);
             await searchBar.click();
             await browser.sleep(1000);
@@ -39,12 +42,16 @@ VotePage.prototype = Object.create({}, {
             await browser.sleep(1000);
             await tools.waitClick(searchButton);
             await browser.sleep(2000);
+            await tools.closeBBREFPopup();
 
             let playerFound = true;
 
             var entirePage = element.all(by.xpath("//*")).get(0);
+            await browser.sleep(1000);
             var specificText = "";
+            await browser.sleep(1000);
             specificText = await entirePage.getText();
+            await browser.sleep(1000);
 
             if (await specificText.includes("Players who appeared or managed in the major leagues.")) {
 
@@ -54,7 +61,7 @@ VotePage.prototype = Object.create({}, {
 
                 specificText = await entirePage.getText();
                 var totalPlayerCount = await tools.countOccurrences(specificText, "/players/", false);
-                await console.log("totalPlayerCount:" + totalPlayerCount);
+                console.log("totalPlayerCount:" + totalPlayerCount);
 
                 if (totalPlayerCount > 1) {
                     //console.log("Spot-check this - we are on the determination page! Adding to cantFindPlayerArray");
@@ -63,15 +70,18 @@ VotePage.prototype = Object.create({}, {
                     playerFound = false;    
                 }
                 else {
+
+                    console.log("Total player count:" + totalPlayerCount);
+
                     // Check to see if we have the extra page 
-                    const exists = await specificPlayerPageLink.isPresent();
+                    const exists = await specificPlayerPageLink2.isPresent();
 
                     if (exists) {
-                        await console.log("The extra page was here. Clicking the first one.");
-                        await specificPlayerPageLink.click();
+                        console.log("The extra page was here. Clicking the first one.");
+                        await specificPlayerPageLink2.click();
                     }
                     else {
-                        await console.log("Extra page was NOT here");
+                        console.log("Extra page was NOT here");
                     }                    
                 }
             }
@@ -87,7 +97,7 @@ VotePage.prototype = Object.create({}, {
 
             const moreButtonExists = await metaMoreButton.isPresent();
             if (moreButtonExists) {
-                await console.log("The more button was here.");
+                console.log("The more button was here.");
                 await metaMoreButton.click();
                 await browser.sleep(1000);
             }
@@ -102,19 +112,21 @@ VotePage.prototype = Object.create({}, {
             if (playerFound) {
                 // If the word Position is there then we are probably on the right page
                 if (specificText.includes("Position")) { 
-                    await console.log("The word Position was found.");
+                    console.log("The word Position was found.");
 
-                    if (specificText.includes("Still Intact through 2022")) {
-                        await console.log(playerName + " will not be in the game. Rookie status is still intact.");
+                    if (specificText.includes("Still Intact through")) {
+                        console.log(playerName + " will not be in the game. Rookie status is still intact.");
                         await notInGameArray.push(playerName);
                     }
                     else {
-                        await console.log("Rookie text not found for:" + playerName + ", they will be in the game.");
+                        console.log("Rookie text not found for:" + playerName + ", they will be in the game.");
                         await inGameArray.push(playerName);
                     }
                 }
                 else {
-                    await console.log("The page we are on is probably wrong as can't find the word Position:");
+                    console.log("The page we are on is probably wrong as can't find the word Position:");
+
+                    // See how many links 
                     await cantFindPlayerArray.push(playerName);
                 }
             }

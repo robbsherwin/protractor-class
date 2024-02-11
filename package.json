@@ -27,5 +27,8 @@
     "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
     "webdriver-manager": "^12.x"
+  },
+  "dependencies": {
+    "geckodriver": "^4.3.2"
   }
 }

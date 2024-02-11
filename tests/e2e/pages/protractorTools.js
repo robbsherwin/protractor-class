@@ -21,6 +21,20 @@ const EC = protractor.ExpectedConditions;
     return n;
 }
 
+exports.closeBBREFPopup = async () => {
+  let el = element(by.css('[aria-label="Close in-page popup window"]'));
+  await browser.sleep(2000);
+
+  el.isDisplayed().then(async function(result) {
+    if ( result ) {
+      console.log("Stupid popup found.");
+      await el.click();
+      await browser.sleep(1000);
+    } else {
+      console.log("Stupid popup NOT found.");
+    }
+  });
+}
 
 exports.jsClick = async (el) => {
   await browser.executeScript("arguments[0].click();", el);
